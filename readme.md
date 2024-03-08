@@ -37,6 +37,13 @@ The Trip Management System is a database project aimed at efficiently managing c
 1. Connect your application to the database using the appropriate configuration.
 1. Integrate the ER model rules into your application logic for effective data management.
 
+## E-R Model
+
+![E-R Model](/images/ER%20Model.png)
+
+## Database relations
+
+![Database relations](/images/DB%20Relations.png)
 ## Contributing
 
 If you would like to contribute to the Trip Management System project, please follow our [Contribution Guidelines](CONTRIBUTING.md).
