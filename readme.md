@@ -8,7 +8,7 @@ The Trip Management System is a database project aimed at efficiently managing c
 
 ### 1. Customer and Trip
 
-- **Rule 1:** A customer can book multiple trips.
+- ***Rule 1:*** A customer can book multiple trips.
 - **Rule 2:** A trip can be booked by multiple customers.
 
 ### 2. Customer and Feedback
