@@ -51,3 +51,6 @@ If you would like to contribute to the Trip Management System project, please fo
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+## SQL TABELS
+![Sql tables](/images/SQL Table.png)
