@@ -22,18 +22,18 @@
     </nav>
     <div class="register-container">
         <h1> User Registration</h1>
-        <form class="user-form" action="process.php" method="POST">
+        <form class="user-form" id="user-reg"method="POST">
             <div>
                 <label for="firstName">First Name</label>
                 <input type="text" id="firstName" name="firstName">
             </div>
             <div>
                 <label>Last Name</label>
-                <input type="text" name="Last Name">
+                <input type="text" id="lastName" name="Last Name">
             </div>    
             <div>
                 <label>Email</label>
-                <input type="text" name="email">
+                <input type="text" id="email"name="email">
             </div>     
             <div>
                 <label>Gender</label>
@@ -45,11 +45,11 @@
             </div>     
             <div>
                 <label>Age:</label>
-                <input type="number" name="age">
+                <input type="number" id="age"name="age">
             </div>
             <div>
                 <label>Date of Birth</label>
-                <input type="date" name="date of birth">
+                <input type="date" id="date"name="date of birth">
             </div>
             <div class="align-center">
                 <input type="submit" value="submit">
@@ -59,5 +59,6 @@
     <footer>
         <p>&copy; 2024 My Simple Web Page</p>
     </footer>
+    <script src="../Scripts/user.js"></script>
 </body>
 </html>
