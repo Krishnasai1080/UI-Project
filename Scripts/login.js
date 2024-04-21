@@ -1,4 +1,4 @@
-document.getElementById("login-info").addEventListener('submit',"logininfo");
+document.getElementById("login-info").addEventListener('submit',logininfo);
 function logininfo(e)
 {
     e.preventDefault();
