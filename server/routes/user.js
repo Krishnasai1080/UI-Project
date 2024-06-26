@@ -1,51 +1,45 @@
-const express = require("express")
-const User = require("../models/user")
-const router = express.Router()
+// 1. import any needed libraries
+const express = require("express");
+const User = require('../models/user'); //accesses functions in user model file
+const router = express.Router();
 
+// 2. create all routes to access database
 router
-.get('/getUsers', async (req, res) => {
-  try {
-    const users = await User.getAllUsers()
-    res.send(users)
-  } catch(err) {
-    res.status(401).send({message: err.message})
-  }
-})
+  .post('/login', async (req, res) => {
+    try {
+      const user = await User.login(req.body.username, req.body.password);
+      res.send({...user, password: undefined});
+    } catch(error) {
+      res.status(401).send({ message: error.message });
+    }
+  })
 
-.post('/login', async (req, res) => {
-  try {
-    const user = await User.login(req.body)
-    res.send({...user, Password: undefined})
-  } catch(err) {
-    res.status(401).send({message: err.message})
-  }
-})
+  .post('/register', async (req, res) => {
+    try {
+      const user = await User.register(req.body.Firstname,req.body.username, req.body.password,  req.body.Lastname, req.body.Email, req.body.Gender, req.body.Age, req.body.DateofBirth);
+      res.send({...user, password: undefined});
+    } catch(error) {
+      res.status(401).send({ message: error.message }); 
+    }
+  })
 
-.post('/register', async (req, res) => {
-  try {
-    const user = await User.register(req.body)
-    res.send({...user, Password: undefined})
-  } catch(err) {
-    res.status(401).send({message: err.message})
-  }
-})
+  .put('/update', async (req, res) => {
+    try {
+      const user = await User.updatePassword(req.body.id, req.body.password);
+      res.send({...user, password: undefined});
+    } catch(error) {
+      res.status(401).send({ message: error.message });
+    }
+  })
 
-.put('/edit', async (req, res) => {
-  try {
-    let updatedUser = await User.editUsername(req.body)
-    res.send({...updatedUser, Password: undefined})
-  } catch(err) {
-    res.status(401).send({message: err.message})
-  }
-})
+  .delete('/delete', async (req, res) => {
+    try {
+      await User.deleteUser(req.body.id);
+      res.send({ success: "Account deleted" });
+    } catch(error) {
+      res.status(401).send({ message: error.message });
+    }
+  })
 
-.delete('/remove', async (req, res) => {
-  try {
-    await User.deleteAccount(req.body)
-    res.send({success: "How DARE YOU LEAVE ME!!!! >:((("})
-  } catch(err) {
-    res.status(401).send({message: err.message})
-  }
-})
-
-module.exports = router
+// 3. export router for use in index.js
+module.exports = router;

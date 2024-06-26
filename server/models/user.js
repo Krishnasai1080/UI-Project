@@ -1,80 +1,67 @@
-const con = require("./db_connect")
+// 1. import mongoose
+const mongoose = require("mongoose");
 
-async function createTable() {
-  let sql = `CREATE TABLE IF NOT EXISTS User (
-    CustomerID INT NOT NULL AUTO_INCREMENT,
-    Firstname VARCHAR(255) NOT NULL ,
-    Lastname VARCHAR(255) NOT NULL ,
-    Email VARCHAR(255) NOT NULL UNIQUE,
-    Gender VARCHAR(255) NOT NULL ,
-    Age  VARCHAR(255) NOT NULL ,
-    DateofBirth  VARCHAR(255) NOT NULL ,
-    Password VARCHAR(255) NOT NULL,
-    CONSTRAINT userPK PRIMARY KEY(CustomerID));`
+// 2. create schema for entity
+const userSchema1= new mongoose.Schema({
+  Firstname: {type: String, required: true},
+  username: { type: String, unique: true, required: true},
+  Email: { type: String, unique: true, required: true},
+  password: { type: String, required: true},
+  Lastname: {type: String, required: true},
+  Gender: {type: String, required: true},
+  Age: {type: String, required: true},
+  DateofBirth: {type: String, required: true}
+})
 
-  await con.query(sql);  
+// 3. create model of schema
+const User = mongoose.model("User", userSchema1);
+
+// 4. create CRUD functions on model
+//CREATE a user
+async function register(username, password) {
+  const user = await getUser(username);
+  if(user) throw Error('Username already in use');
+
+  const newUser = await User.create({
+    Firstname: Firstname,
+    Lastname: Lastname,
+    Email: Email,
+    Gender: Gender,
+    Age: Age,
+    DateofBirth: DateofBirth,
+    username:username,
+    password: password
+  });
+
+  return newUser;
 }
 
-createTable()
+// READ a user
+async function login(username, password) {
+  const user = await getUser(username);
+  if(!user) throw Error('User not found');
+  if(user.password != password) throw Error('Wrong Password');
 
-// CRUD functions will go here 
-//R for READ -- get all users
-async function getAllUsers() {
-  let sql = `SELECT * FROM User;`
-  return await con.query(sql)
-}
-async function emailExists(email) {
-  let sql = `SELECT * FROM User 
-    WHERE Email = "${email}"
-  `
-  return await con.query(sql) 
+  return user;
 }
 
-
-async function register(user) {
-
-  let email = await emailExists(user.Email)
-  if(email.length > 0) throw Error("Account with Email already in use")
-
-  let sql = `
-    INSERT INTO User(Firstname, Lastname, Email,Gender,Age,DateofBirth,Password)
-    VALUES("${user.Firstname}", "${user.Lastname}", "${user.Email}", "${user.Gender}","${user.Age}","${user.DateofBirth}","${user.Password}");
-  `
-  await con.query(sql)
-  const u = await emailExists(user.Email)
-  console.log(u)
-  return u[0]
+// UPDATE
+async function updatePassword(id, password) {
+  const user = await User.updateOne({"_id": id}, {$set: { password: password}});
+  return user;
 }
 
-// READ in CRUD
-async function login(user) {
-  let currentUser = await emailExists(user.Email)
-  if(!currentUser[0]) throw Error("Email does not exist!")
-  if(user.Password !== currentUser[0].Password) throw Error("Password does not match!")
+//DELETE
+async function deleteUser(id) {
+  await User.deleteOne({"_id": id});
+};
 
-  return currentUser[0]
+// utility functions
+async function getUser(username) {
+  return await User.findOne({ "username": username});
 }
 
-// UPDATE in CRUD
-async function editUsername(user) {
-  let sql = `
-    UPDATE User SET
-    Username = "${user.Username}"
-    WHERE UserID = ${user.UserID}
-  `
-  await con.query(sql)
-
-  let updatedUser = await userExists(user.Username)
-  return updatedUser[0]
-}
-
-// DELETE in CRUD
-async function deleteAccount(user) {
-  let sql = `
-    DELETE FROM User
-    WHERE UserID = ${user.UserID}
-  `
-  await con.query(sql)
-}
-
-module.exports = { getAllUsers, login, register, editUsername, deleteAccount }
+// 5. export all functions we want to access in route files
+module.exports = { 
+  register, login, updatePassword, deleteUser 
+};

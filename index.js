@@ -7,7 +7,6 @@ const path = require('path')
 app.use(express.json()); 
 
 const userRoutes = require("./server/routes/user")
-const userRoutesm = require("./server/routes/user_mongo")
 
 mongoose.connect(process.env.dbURL)
   .then(console.log("DB Connected!!"))
@@ -21,11 +20,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(express.static(__dirname + "/public"))
-app.get('/', (req, res) => res.sendFile(path.join(__dirname + "/public/index.html")))
-
-app.use('/users', userRoutes)
-app.use('/user_mongo',userRoutesm)
+app.use('/user', userRoutes)
 
 const PORT = process.env.PORT || 3000
 
