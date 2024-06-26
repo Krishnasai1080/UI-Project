@@ -25,6 +25,7 @@ async function register(username, password) {
     Gender: Gender,
     Age: Age,
     DateofBirth: DateofBirth,
+    username:username,
     password: password
   });
 
