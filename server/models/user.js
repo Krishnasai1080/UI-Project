@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const bcrypt = require('bcryptjs');
 
 // 2. create schema for entity
-const userSchema1= new mongoose.Schema({
+const userSchema= new mongoose.Schema({
   Firstname: {type: String, required: true},
   username: { type: String, unique: true, required: true},
   Email: { type: String, unique: true, required: true},
@@ -15,7 +15,7 @@ const userSchema1= new mongoose.Schema({
 })
 
 // 3. create model of schema
-const User = mongoose.model("User", userSchema1);
+const User = mongoose.model("User", userSchema);
 
 // 4. create CRUD functions on model
 //CREATE a user
@@ -45,7 +45,7 @@ async function login(username, password) {
   const user = await getUser(username);
   if(!user) throw Error('User not found');
 
-  const isMatch = await bcrypt.compare(passward,)
+  const isMatch = await bcrypt.compare(password,)
   if(user.password != password) throw Error('Wrong Password');
 
   return user._doc;
