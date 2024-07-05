@@ -7,7 +7,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     const [user, setUser] = useState({
-        Email: '',
+        Username: '',
         Password: ''
     });
 
@@ -28,7 +28,7 @@ const Login = () => {
             });
     }
 
-    const { Email, Password } = user;
+    const { Username, Password } = user;
 
     const [errorMessage, setErrorMessage] = useState(null);
 
@@ -49,10 +49,10 @@ const Login = () => {
                         <input
                             type="text"
                             className="form-control"
-                            id="Email"
-                            name='Email'
-                            value={Email}
-                            placeholder="Email"
+                            id="Username"
+                            name='Username'
+                            value={Username}
+                            placeholder="Username"
                             onChange={onChange}
                             required />
                     </div>

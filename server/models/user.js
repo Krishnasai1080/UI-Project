@@ -46,7 +46,6 @@ async function login(Username, Password) {
 
   const isMatch = await bcrypt.compare(Password,user.Password)
   if(isMatch) throw Error('Wrong Password');
-
   return user._doc;
 }
 
