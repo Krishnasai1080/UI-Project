@@ -69,10 +69,6 @@ async function getEmail(Email) {
   return await User.findOne({ "Email": Email});
 }
 
-async function getUser(Username) {
-  return await User.findOne({ "Username": Username});
-}
-
 module.exports = { 
-  register, login, updatePassword, deleteUser 
+  register, login, updatePassword, deleteUser , getUser, getEmail
 };
