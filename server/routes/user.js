@@ -7,8 +7,8 @@ const router = express.Router();
 router
   .post('/login', async (req, res) => {
     try {
-      const user = await User.login(req.body.username, req.body.password);
-      res.send({...user, password: undefined});
+      const user = await User.login(req.body.Username, req.body.Password);
+      res.send({...user, Password: undefined});
     } catch(error) {
       res.status(401).send({ message: error.message });
     }
@@ -16,8 +16,8 @@ router
 
   .post('/register', async (req, res) => {
     try {
-      const user = await User.register(req.body.Firstname,req.body.Lastname, req.body.Email,  req.body.Gender, req.body.Age, req.body.DateofBirth, req.body.username, req.body.password);
-      res.send(user);
+      const user = await User.register(req.body.Firstname,req.body.Lastname, req.body.Email,  req.body.Gender, req.body.Age, req.body.DateofBirth, req.body.Username, req.body.Password);
+      res.send({...user, Password: undefined});
     } catch(error) {
       res.status(401).send({ message: error.message }); 
     }
@@ -25,8 +25,8 @@ router
 
   .put('/update', async (req, res) => {
     try {
-      const user = await User.updatePassword(req.body.id, req.body.password);
-      res.send({...user, password: undefined});
+      const user = await User.updatePassword(req.body.id, req.body.Password);
+      res.send({...user, Password: undefined});
     } catch(error) {
       res.status(401).send({ message: error.message });
     }

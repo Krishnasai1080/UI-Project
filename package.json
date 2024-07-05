@@ -20,6 +20,7 @@
     "express": "^4.19.2",
     "mongodb": "^6.7.0",
     "mongoose": "^8.4.4",
+    "react-helmet": "^6.1.0",
     "react-router-dom": "^6.24.0"
   },
   "devDependencies": {

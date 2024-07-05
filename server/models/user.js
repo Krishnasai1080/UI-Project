@@ -1,31 +1,27 @@
-// 1. import mongoose
 const mongoose = require("mongoose");
 const bcrypt = require('bcryptjs');
 
-// 2. create schema for entity
 const userSchema= new mongoose.Schema({
   Firstname: {type: String, required: true},
-  username: { type: String, unique: true, required: true},
+  Username: { type: String, unique: true, required: true},
   Email: { type: String, unique: true, required: true},
-  password: { type: String, required: true},
+  Password: { type: String, required: true},
   Lastname: {type: String, required: true},
   Gender: {type: String, required: true},
   Age: {type: String, required: true},
   DateofBirth: {type: String, required: true}
 })
 
-// 3. create model of schema
 const User = mongoose.model("User", userSchema);
 
-// 4. create CRUD functions on model
-//CREATE a user
-async function register(Firstname, Lastname, Email, Gender, Age, DateofBirth, username, password) {
-  const user = await getUser(username);
+async function register(Firstname, Lastname, Email, Gender, Age, DateofBirth, Username, Password) {
+  const user = await getUser(Username);
   if(user) throw Error('Username already in use');
-
+  const emailcheck = await getEmail(Email);
+  if(emailcheck) throw Error('Email already in use');
 
   const salt = await bcrypt.genSalt(10);
-  const hashed = await bcrypt.hash(password, salt);
+  const hashed = await bcrypt.hash(Password, salt);
   const newUser = await User.create({
     Firstname: Firstname,
     Lastname: Lastname,
@@ -33,41 +29,50 @@ async function register(Firstname, Lastname, Email, Gender, Age, DateofBirth, us
     Gender: Gender,
     Age: Age,
     DateofBirth: DateofBirth,
-    username:username,
-    password: hashed
+    Username:Username,
+    Password: hashed
   });
 
   return newUser._doc;
 }
 
-// READ a user
-async function login(username, password) {
-  const user = await getUser(username);
-  if(!user) throw Error('User not found');
 
-  const isMatch = await bcrypt.compare(password,)
-  if(user.password != password) throw Error('Wrong Password');
+async function login(Username, Password) {
+  var user = await getUser(Username);
+  if(!user) {
+    var user= await getEmail(Username);
+    if(!user)throw Error("Username/Email do not Exist");
+
+
+  }
+
+  const isMatch = await bcrypt.compare(Password,user.Password)
+  if(isMatch) throw Error('Wrong Password');
 
   return user._doc;
 }
 
-// UPDATE
-async function updatePassword(id, password) {
-  const user = await User.updateOne({"_id": id}, {$set: { password: password}});
+async function updatePassword(id, Password) {
+  const user = await User.updateOne({"_id": id}, {$set: { Password: Password}});
   return user;
 }
 
-//DELETE
 async function deleteUser(id) {
   await User.deleteOne({"_id": id});
 };
 
-// utility functions
-async function getUser(username) {
-  return await User.findOne({ "username": username});
+async function getUser(Username) {
+  return await User.findOne({ "Username": Username});
 }
 
-// 5. export all functions we want to access in route files
+async function getEmail(Email) {
+  return await User.findOne({ "Email": Email});
+}
+
+async function getUser(Username) {
+  return await User.findOne({ "Username": Username});
+}
+
 module.exports = { 
   register, login, updatePassword, deleteUser 
 };
