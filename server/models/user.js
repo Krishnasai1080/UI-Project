@@ -42,8 +42,6 @@ async function login(Username, Password) {
   if(!user) {
     var user= await getEmail(Username);
     if(!user)throw Error("Username/Email do not Exist");
-
-
   }
 
   const isMatch = await bcrypt.compare(Password,user.Password)
