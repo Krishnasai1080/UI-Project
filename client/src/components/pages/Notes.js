@@ -19,7 +19,7 @@ const Notes = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (notes.NotesDetail.trim() === "") {
-            setErrorMessage("Please enter a note before hitting submit!! 🙃");
+            setErrorMessage("Please enter a note");
         } else {
             const retrievedUser = JSON.parse(localStorage.getItem('user'));
             const usernotes = {
@@ -27,10 +27,10 @@ const Notes = () => {
                 NotesDetail: notes.NotesDetail
             };
 
-            fetchData("/note/add", usernotes, "POST")
+            fetchData("/notes/newNote", usernotes, "POST")
                 .then((data) => {
                     if (data.Success.indexOf("Notes Added") !== -1) {
-                        setSuccessMessage(`👍🏻 "${usernotes.NotesDetail}" was added successfully to MongoDB.`);
+                        setSuccessMessage(`Notes Added Successfully!!!`);
                     }
                 })
                 .catch((error) => {
