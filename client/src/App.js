@@ -6,6 +6,7 @@ import Register from './components/pages/Register.js'
 import Login from './components/pages/Login.js';
 import Profile from './components/pages/Profile.js';
 import Reset from './components/pages/Reset.js';
+import Notes from './components/pages/Notes.js';
 function App() {
   return (
     <div className="App">
@@ -17,6 +18,8 @@ function App() {
             <Route path="Login" element={<Login />} />
             <Route path="Profile" element={<Profile />} />
             <Route path="Reset" element={<Reset />} />
+            <Route path="Notes" element={<Notes />} />
+
           </Route>
         </Routes>
       </BrowserRouter>

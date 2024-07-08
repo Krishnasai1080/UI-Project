@@ -71,7 +71,7 @@ const Navbar = () => {
                                         <Link className="nav-link btn" to="/Profile">Profile</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link btn" to="/Profile">Take Notes</Link>
+                                        <Link className="nav-link btn" to="/Notes">Take Notes</Link>
                                     </li>
                                     <li className="nav-item">
                                         <button className="nav-link btn btn-link" onClick={handleLogout}>
