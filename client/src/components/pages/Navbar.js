@@ -45,14 +45,22 @@ const Navbar = () => {
                             )}
                             {isLoggedIn && (
                                 <>
+                                   
                                     <li className="nav-item">
                                         <Link className="nav-link" to="/Profile">Profile</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/Profile">Take Notes</Link>
                                     </li>
                                     <li className="nav-item">
                                         <button className="nav-link btn" onClick={handleLogout} style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
                                             Logout
                                         </button>
                                     </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/Profile">Delete Account</Link>
+                                    </li>
+                                    
                                 </>
                             )}
                         </ul>
