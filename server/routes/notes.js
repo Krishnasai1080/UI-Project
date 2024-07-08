@@ -26,7 +26,7 @@ router
     })
     .put('/update', async (req, res) => {
         try {
-            const notes = await Note.updateNote(req.body.id, req.body.NotesDetail);
+            const notes = await Note.updateaNote(req.body.id, req.body.NotesDetail);
             res.send({ message: `Notes Added Successfully!!` });
         } catch (error) {
             res.status(401).send({ message: error.message });
@@ -35,7 +35,7 @@ router
 
     .delete('/delete', async (req, res) => {
         try {
-            await Note.deleteNote(req.body.id);
+            await Note.deleteaNote(req.body.id);
             res.send({ success: "Note deleted Successfully!!" });
         } catch (error) {
             res.status(401).send({ message: error.message });

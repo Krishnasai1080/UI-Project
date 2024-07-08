@@ -7,6 +7,7 @@ const path = require('path')
 app.use(express.json()); 
 
 const userRoutes = require("./server/routes/user")
+const userNotes = require("./server/routes/notes")
 
 mongoose.connect(process.env.dbURL)
   .then(console.log("DB Connected!!"))
@@ -21,6 +22,7 @@ app.use(function(req, res, next) {
 });
 
 app.use('/user', userRoutes)
+app.use('/user', userNotes)
 
 const PORT = process.env.PORT || 5000
 
