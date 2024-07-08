@@ -5,6 +5,7 @@ import Navbar from './components/pages/Navbar.js'
 import Register from './components/pages/Register.js'
 import Login from './components/pages/Login.js';
 import Profile from './components/pages/Profile.js';
+import Reset from './components/pages/Reset.js';
 function App() {
   return (
     <div className="App">
@@ -15,6 +16,7 @@ function App() {
             <Route path="Register" element={<Register />} />
             <Route path="Login" element={<Login />} />
             <Route path="Profile" element={<Profile />} />
+            <Route path="Reset" element={<Reset />} />
           </Route>
         </Routes>
       </BrowserRouter>

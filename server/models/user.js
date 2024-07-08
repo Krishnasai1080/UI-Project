@@ -43,14 +43,15 @@ async function login(Username, Password) {
     var user= await getEmail(Username);
     if(!user)throw Error("Username/Email do not Exist");
   }
-
   const isMatch = await bcrypt.compare(Password,user.Password)
-  if(isMatch) throw Error('Wrong Password');
+  if(!isMatch) throw Error('Wrong Password');
   return user._doc;
 }
 
 async function updatePassword(id, Password) {
-  const user = await User.updateOne({"_id": id}, {$set: { Password: Password}});
+  const salt = await bcrypt.genSalt(10);
+  const hashed = await bcrypt.hash(Password, salt);
+  const user = await User.updateOne({"_id": id}, {$set: { Password: hashed}});
   return user;
 }
 
@@ -66,6 +67,21 @@ async function getEmail(Email) {
   return await User.findOne({ "Email": Email});
 }
 
+
+async function retriveUserData(User) {
+  var user = await getUser(User);
+  if (user) {
+      return user._doc;
+  }
+  else {
+      var user = await getEmail(User);
+      if (user) {
+          return user._doc;
+      }
+      throw Error("Username/Email do not exist!!");
+  }
+}
 module.exports = { 
-  register, login, updatePassword, deleteUser , getUser, getEmail
+  register, login, updatePassword, deleteUser , getUser, getEmail, retriveUserData
 };
+

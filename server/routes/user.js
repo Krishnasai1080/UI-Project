@@ -23,6 +23,15 @@ router
     }
   })
 
+  .post('/retriveUserData', async (req, res) => {
+    try {
+        const user = await User.retriveUserData(req.body.UsernameOrEmail);
+        res.send({ ...user, Password: undefined });
+    } catch (error) {
+        res.status(401).send({ message: error.message });
+    }
+})
+
   .put('/update', async (req, res) => {
     try {
       const user = await User.updatePassword(req.body.id, req.body.Password);
@@ -31,6 +40,8 @@ router
       res.status(401).send({ message: error.message });
     }
   })
+
+
 
   .delete('/delete', async (req, res) => {
     try {
