@@ -18,7 +18,7 @@ router
             return res.status(400).send({ message: 'User ID is required' });
         }
         try {
-            const notes = await Note.getUserNotes(userId);
+            const notes = await Note.getNote(userId);
             res.send(notes);
         } catch (error) {
             res.status(401).send({ message: 'Error retrieving notes: ' + error.message });

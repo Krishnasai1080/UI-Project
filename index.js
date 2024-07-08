@@ -22,7 +22,7 @@ app.use(function(req, res, next) {
 });
 
 app.use('/user', userRoutes)
-app.use('/user', userNotes)
+app.use('/notes', userNotes)
 
 const PORT = process.env.PORT || 5000
 
